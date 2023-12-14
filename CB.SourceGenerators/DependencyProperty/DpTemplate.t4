@@ -1,0 +1,38 @@
+<#@ template language="C#" visibility="public" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="CB.SourceGenerators.DependencyProperty" #>
+<# foreach (var @using in Usings)
+{
+Write($"using {@using.Name.ToString()};\n");
+} #>
+    
+namespace <#= NamespaceName #>;
+
+public partial class <#= ClassName #>  //DependencyProperty
+{
+<# 
+    foreach (var field in DpFields){
+#>
+
+    public <#=field.Type#> <#=field.Name#>
+    {
+        get { return (<#=field.Type#>)GetValue(<#=field.Name#>Property); }
+        set { SetValue(<#=field.Name#>Property, value); }
+    }
+
+    public static readonly System.Windows.DependencyProperty <#=field.Name#>Property =
+        System.Windows.DependencyProperty.Register(nameof(<#=field.Name#>), 
+            typeof(<#=field.Type#>), 
+            typeof(<#=ClassName#> ), 
+            new System.Windows.PropertyMetadata(<#=field.DefaultValue#>,
+                propertyChangedCallback: (s, e)
+                     => ((<#=ClassName#>)s).On<#=field.Name#>Changed((<#=field.Type#>)e.NewValue)));
+
+    partial void On<#=field.Name#>Changed(<#=field.Type#> newValue);
+
+<# 
+} 
+#>
+}
+

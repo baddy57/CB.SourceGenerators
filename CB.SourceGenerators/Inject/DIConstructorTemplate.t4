@@ -1,0 +1,33 @@
+<#@ template language="C#" visibility="public" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="CB.SourceGenerators.Inject" #>
+<# foreach (var @using in Usings)
+{
+Write($"using {@using.Name.ToString()};\n");
+} #>
+    
+#nullable enable
+
+namespace <#= NamespaceName #>;
+ 
+public partial class <#= ClassName #> //Inject
+{
+    public <#= ClassName #>(
+<#  Write("        "); Write(string.Join(",\n        ", InjectFields.Select(f=>f.ToParameterString()))); #>
+)
+    {
+<#  foreach (var injectField in InjectFields)
+{
+    Write($"        this.{injectField.Name} = {injectField.Name};\n");
+} #>
+        Init();
+    }
+
+    /// <summary>
+    /// This metod is invoked AFTER the [Inject] dependencies have been resolved
+    /// </summary>
+    partial void Init();
+
+}
+

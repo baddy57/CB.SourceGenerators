@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<T4BuildEnabled>true</T4BuildEnabled>
+		<T4TargetsPath>$(NuGetPackageRoot)microsoft.visualstudio.texttemplating\16.0.412\build\Microsoft.TextTemplating.targets</T4TargetsPath>
+		<UserSecretsId>1c739680-7715-4c01-a251-093d17147ce9</UserSecretsId>
+		<EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+		<PackageReference Include="Microsoft.VisualStudio.TextTemplating" Version="17.5.33428.366" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="DependencyProperty\DpTemplate.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>DpTemplate.t4</DependentUpon>
+	  </Compile>
+		
+	  <Compile Update="Inject\DIConstructorTemplate.cs">
+	    <DependentUpon>DIConstructorTemplate.t4</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+		
+	  <Compile Update="WpfInject\WpfInjectTemplate.cs">
+	    <DependentUpon>WpfInjectTemplate.t4</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="DependencyProperty\DpTemplate.t4">
+	    <LastGenOutput>DpTemplate.cs</LastGenOutput>
+	    <Generator>TextTemplatingFilePreprocessor</Generator>
+	  </None>
+	  <None Update="Inject\DIConstructorTemplate.t4">
+	    <LastGenOutput>DIConstructorTemplate.cs</LastGenOutput>
+	    <Generator>TextTemplatingFilePreprocessor</Generator>
+	  </None>
+	  <None Update="WpfInject\WpfInjectTemplate.t4">
+	    <LastGenOutput>WpfInjectTemplate.cs</LastGenOutput>
+	    <Generator>TextTemplatingFilePreprocessor</Generator>
+	  </None>
+	</ItemGroup>
+
+</Project>
+		

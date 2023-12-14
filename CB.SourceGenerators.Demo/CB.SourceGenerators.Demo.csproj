@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<UseWPF>true</UseWPF>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CB.SourceGenerators.Attributes\CB.SourceGenerators.Attributes.csproj" />
+		<ProjectReference Include="..\CB.SourceGenerators\CB.SourceGenerators.csproj" OutputItemType="Analyzer" />
+	</ItemGroup>
+
+</Project>

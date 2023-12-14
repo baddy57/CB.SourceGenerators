@@ -1,0 +1,35 @@
+<#@ template language="C#" visibility="public" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="CB.SourceGenerators.Inject" #>
+<# foreach (var @using in Usings)
+{
+Write($"using {@using.Name.ToString()};");
+} #>
+    
+#nullable enable
+
+namespace <#= NamespaceName #>;
+ 
+public partial class <#= ClassName #> //wpf Inject
+{
+    public <#= ClassName #>() : this (
+<#  Write("        "); Write(string.Join(",\n        ", InjectFields.Select(f=>f.ToIocString()))); #>
+)
+    {
+        InitializeComponent();
+        Loaded += <#=ClassName#>_Loaded;
+    }
+
+    private void <#=ClassName#>_Loaded (object? sender, EventArgs e)
+    {
+        OnFirstLoad();
+        Loaded -= <#=ClassName#>_Loaded;
+    }
+
+    /// <summary>
+    /// This metod is invoked AFTER the first load
+    /// </summary>
+    partial void OnFirstLoad();
+}
+
